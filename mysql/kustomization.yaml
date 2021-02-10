@@ -7,19 +7,19 @@ resources:
 # always) and the Service name is changed (e.g. with a namePrefix) the MYSQL_SERVICE value should
 # be updated correspondingly.
 configurations:
-  - ./kustomizeconfig/namereference.yaml
+- ./kustomizeconfig/namereference.yaml
 
 configMapGenerator:
-  - name: mysql
-    literals:
-      - MYSQL_USER=mysql
-      - MYSQL_DATABASE=default
-      - ALLOW_ROOT_FROM='%'
-      - DEBUG="true"
-      - MYSQL_SERVICE=mysql
+- name: mysql
+  literals:
+  - MYSQL_USER=mysql
+  - MYSQL_DATABASE=default
+  - ALLOW_ROOT_FROM='%'
+  - DEBUG="true"
+  - MYSQL_SERVICE=mysql
 
 secretGenerator:
-  - name: mysql
-    literals:
-      - MYSQL_PASSWORD=password
-      - MYSQL_ROOT_PASSWORD=root
+- name: mysql
+  literals:
+  - MYSQL_PASSWORD=password
+  - MYSQL_ROOT_PASSWORD=root
