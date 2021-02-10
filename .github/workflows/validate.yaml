@@ -13,3 +13,4 @@ jobs:
           kustomize: 3.10.0
           command: |
             kustomize build mysql | kubeval --strict
+            kustomize build redis | kubeval --strict
