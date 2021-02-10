@@ -15,7 +15,6 @@ configMapGenerator:
   - MYSQL_USER=mysql
   - MYSQL_DATABASE=default
   - ALLOW_ROOT_FROM='%'
-  - DEBUG="true"
   - MYSQL_SERVICE=mysql
 
 secretGenerator:
