@@ -1,3 +1,4 @@
+# This is intended for development use, not production use
 resources:
 - clusterrolebinding.yaml
 - clusterrole.yaml
@@ -10,24 +11,28 @@ configMapGenerator:
 - name: vault-config
   files:
   - extraconfig-from-values.hcl
-- name: vault-dev-config
-  literals:
-  - VAULT_DEV_ROOT_TOKEN_ID=devroottoken
 
-patches:
-- target:
-    kind: StatefulSet
-    name: vault
-  patch: |-
-    apiVersion: apps/v1
-    kind: StatefulSet
-    metadata:
-      name: ignored
-    spec:
-      template:
-        spec:
-          containers:
-          - name: vault
-            envFrom:
-            - configMapRef:
-                name: vault-dev-config
+# We don't include this here as it's unsafe, but to run vault in development mode, the following
+# two sections are useful
+#
+# - name: vault-dev-config
+#   literals:
+#   - VAULT_DEV_ROOT_TOKEN_ID=devroottoken
+#
+# patches:
+# - target:
+#     kind: StatefulSet
+#     name: vault
+#   patch: |-
+#     apiVersion: apps/v1
+#     kind: StatefulSet
+#     metadata:
+#       name: ignored
+#     spec:
+#       template:
+#         spec:
+#           containers:
+#           - name: vault
+#             envFrom:
+#             - configMapRef:
+#                 name: vault-dev-config

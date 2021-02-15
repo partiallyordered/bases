@@ -1,4 +1,4 @@
-disable_mlock = false
+disable_mlock = true
 ui = false
 
 listener "tcp" {
