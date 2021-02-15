@@ -14,4 +14,5 @@ jobs:
           command: |
             kustomize build mysql | kubeval --strict
             kustomize build redis | kubeval --strict
-            kustomize build vault/service | kubeval --strict
+            kustomize build vault/service/base | kubeval --strict
+            kustomize build vault/service/dev | kubeval --strict

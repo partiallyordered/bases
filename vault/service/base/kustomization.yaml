@@ -1,0 +1,12 @@
+resources:
+- clusterrolebinding.yaml
+- clusterrole.yaml
+- internal-service.yaml
+- serviceaccount.yaml
+- service.yaml
+- statefulset.yaml
+
+configMapGenerator:
+- name: vault-config
+  files:
+  - extraconfig-from-values.hcl
