@@ -1,0 +1,33 @@
+resources:
+- clusterrolebinding.yaml
+- clusterrole.yaml
+- internal-service.yaml
+- serviceaccount.yaml
+- service.yaml
+- statefulset.yaml
+
+configMapGenerator:
+- name: vault-config
+  files:
+  - extraconfig-from-values.hcl
+- name: vault-dev-config
+  literals:
+  - VAULT_DEV_ROOT_TOKEN_ID=devroottoken
+
+patches:
+- target:
+    kind: StatefulSet
+    name: vault
+  patch: |-
+    apiVersion: apps/v1
+    kind: StatefulSet
+    metadata:
+      name: ignored
+    spec:
+      template:
+        spec:
+          containers:
+          - name: vault
+            envFrom:
+            - configMapRef:
+                name: vault-dev-config
