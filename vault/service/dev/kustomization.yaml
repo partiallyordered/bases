@@ -5,6 +5,7 @@ configMapGenerator:
 - name: vault-dev-config
   literals:
   - VAULT_DEV_ROOT_TOKEN_ID=devroottoken
+  - VAULT_DEV_LISTEN_ADDRESS=[::]:8200
 
 patches:
 - target:
@@ -21,7 +22,7 @@ patches:
           containers:
           - name: vault
             args:
-            - /usr/local/bin/docker-entrypoint.sh vault server -dev
+            - /usr/local/bin/docker-entrypoint.sh vault server -dev -log-level=trace
             envFrom:
             - configMapRef:
                 name: vault-dev-config
