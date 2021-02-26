@@ -6,13 +6,14 @@ jobs:
   test-action:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Run Kubernetes tools
-        uses: stefanprodan/kube-tools@v1
-        with:
-          kustomize: 3.10.0
-          command: |
-            kustomize build mysql | kubeval --strict
-            kustomize build redis | kubeval --strict
-            kustomize build vault/service/base | kubeval --strict
-            kustomize build vault/service/dev | kubeval --strict
+    - uses: actions/checkout@v2
+    - name: Run Kubernetes tools
+      uses: stefanprodan/kube-tools@v1
+      with:
+        kustomize: 3.10.0
+        command: |
+          kustomize build mysql | kubeval --strict
+          kustomize build redis | kubeval --strict
+          kustomize build timescale | kubeval --strict
+          kustomize build vault/service/base | kubeval --strict
+          kustomize build vault/service/dev | kubeval --strict
