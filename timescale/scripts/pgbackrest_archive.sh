@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# This file and its contents are licensed under the Apache License 2.0.
+# Please see the included NOTICE for copyright information and LICENSE for a copy of the license.
+
 # If no backup is configured, archive_command would normally fail. A failing archive_command on a cluster
 # is going to cause WAL to be kept around forever, meaning we'll fill up Volumes we have quite quickly.
 #
