@@ -1,0 +1,31 @@
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: timescaledb-patroni-gh
+  labels:
+    app: timescaledb
+  annotations:
+    "helm.sh/hook": post-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  activeDeadlineSeconds: 120
+  template:
+    metadata:
+      labels:
+        app: timescaledb
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: timescaledb-patch-patroni-config
+        image: curlimages/curl
+        command: ["/bin/sh"]
+        # Patching the Patroni configuration is good, however it should not block an upgrade from going through
+        # Therefore we ensure we always exit with an exitcode 0, so that Helm is satisfied with this upgrade job
+        args:
+        - '-c'
+        - |
+          /usr/bin/curl --connect-timeout 30 --include --request PATCH --data \
+          "{\"loop_wait\":10,\"maximum_lag_on_failover\":33554432,\"postgresql\":{\"parameters\":{\"archive_command\":\"/etc/timescaledb/scripts/pgbackrest_archive.sh %p\",\"archive_mode\":\"on\",\"archive_timeout\":\"1800s\",\"autovacuum_analyze_scale_factor\":0.02,\"autovacuum_max_workers\":10,\"autovacuum_naptime\":\"5s\",\"autovacuum_vacuum_cost_limit\":500,\"autovacuum_vacuum_scale_factor\":0.05,\"hot_standby\":\"on\",\"log_autovacuum_min_duration\":\"1min\",\"log_checkpoints\":\"on\",\"log_connections\":\"on\",\"log_disconnections\":\"on\",\"log_line_prefix\":\"%t [%p]: [%c-%l] %u@%d,app=%a [%e] \",\"log_lock_waits\":\"on\",\"log_min_duration_statement\":\"1s\",\"log_statement\":\"ddl\",\"max_connections\":100,\"max_prepared_transactions\":150,\"shared_preload_libraries\":\"timescaledb,pg_stat_statements\",\"ssl\":\"on\",\"ssl_cert_file\":\"/etc/certificate/tls.crt\",\"ssl_key_file\":\"/etc/certificate/tls.key\",\"tcp_keepalives_idle\":900,\"tcp_keepalives_interval\":100,\"temp_file_limit\":\"1GB\",\"timescaledb.passfile\":\"../.pgpass\",\"unix_socket_directories\":\"/var/run/postgresql\",\"unix_socket_permissions\":\"0750\",\"wal_level\":\"hot_standby\",\"wal_log_hints\":\"on\"},\"use_pg_rewind\":true,\"use_slots\":true},\"retry_timeout\":10,\"ttl\":30}" \
+          "http://timescaledb-config:8008/config"
+          exit 0
