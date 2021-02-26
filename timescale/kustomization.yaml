@@ -17,3 +17,13 @@ configMapGenerator:
   - scripts/post_init.sh
   - scripts/patroni_callback.sh
   - scripts/lifecycle_preStop.psql
+
+resources:
+- config-service.yaml
+- job.yaml
+- replica-service.yaml
+- rolebinding.yaml
+- role.yaml
+- serviceaccount.yaml
+- service.yaml
+- statefulset.yaml

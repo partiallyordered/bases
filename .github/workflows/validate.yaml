@@ -17,3 +17,4 @@ jobs:
           kustomize build timescale | kubeval --strict
           kustomize build vault/service/base | kubeval --strict
           kustomize build vault/service/dev | kubeval --strict
+          kustomize build vault/injector | kubeval --strict
