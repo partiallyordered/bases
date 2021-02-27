@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timescale
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: timescale
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: timescale
+    spec:
+      containers:
+      - name: timescale
+        image: timescale/timescaledb:1.7.0-pg12
+        ports:
+        - containerPort: 5432
+        envFrom:
+        - secretRef:
+            name: timescale

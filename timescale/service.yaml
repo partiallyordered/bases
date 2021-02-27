@@ -1,17 +1,12 @@
-# This file and its contents are licensed under the Apache License 2.0.
-# Please see the included NOTICE for copyright information and LICENSE for a copy of the license.
 apiVersion: v1
 kind: Service
 metadata:
-  name: timescaledb
+  name: timescale
   labels:
-    app: timescaledb
-    role: master
+    app.kubernetes.io/name: timescale
 spec:
-  type: LoadBalancer
   ports:
-  - name: postgresql
-    port: 5432
-    targetPort: postgresql
-    protocol: TCP
-
+  - port: 5432
+    targetPort: 5432
+  selector:
+    app.kubernetes.io/name: timescale
