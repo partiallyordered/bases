@@ -34,8 +34,9 @@ resources:
 
 # It's probably better to have my-deployment default to connecting to redis on redis:6379, but for
 # the sake of demonstration here, we'll inject some environment variables. Here we use an RFC6902
-# JSON patch. Scroll to the table of contents here: https://tools.ietf.org/html/rfc6902 - there are
-# a list of examples at the end of the table of contents, in Appendix A.
+# JSON patch. For more information, scroll to the table of contents here:
+# https://tools.ietf.org/html/rfc6902 - there are a list of examples at the end of the table of
+# contents, in Appendix A.
 #
 # Kustomize also supports strategic merge patches. See the documentation here:
 # https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/patches/
