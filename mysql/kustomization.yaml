@@ -1,3 +1,6 @@
+# Why no persistent volume? Because that imposes constraints on the k8s distributions this can be
+# deployed on, increases complexity, and may cause costs for users. If you need a pv/pvc, create an
+# issue and I'll add an overlay for you, or raise a PR containing an appropriate change/overlay.
 resources:
 - service.yaml
 - deployment.yaml
